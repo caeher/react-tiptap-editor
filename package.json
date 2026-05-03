@@ -23,6 +23,10 @@
     "preview": "vite preview",
     "semantic-release": "semantic-release"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/caeher/react-tiptap-editor.git"
+  },
   "publishConfig": {
     "access": "public"
   },

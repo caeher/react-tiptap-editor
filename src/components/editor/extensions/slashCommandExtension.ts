@@ -7,6 +7,7 @@ import { PluginKey } from '@tiptap/pm/state';
 import { SlashCommandMenu, type SlashCommandMenuRef } from '../SlashCommandMenu';
 import type { SlashItem } from '../hooks/useEditorSlashCommand';
 import { getSlashItems } from '../hooks/useEditorSlashCommand';
+import type { EditorConfig } from '../EditorConfig';
 
 export const slashPluginKey = new PluginKey('slashCommand');
 
@@ -20,8 +21,8 @@ function positionSlashMenu(renderer: ReactRenderer, clientRect: (() => DOMRect |
   el.style.top = `${Math.min(window.innerHeight - 8, rect.bottom + 8)}px`;
 }
 
-export function createSlashCommandExtension() {
-  const getItems = () => getSlashItems();
+export function createSlashCommandExtension(config?: EditorConfig) {
+  const getItems = () => getSlashItems(config);
 
   return Extension.create({
     name: 'slashCommand',

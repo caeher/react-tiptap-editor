@@ -9,7 +9,6 @@ import {
   Heading1,
   Heading2,
   SquareCode,
-  Image as ImageIcon,
   BetweenVerticalStart,
   BetweenVerticalEnd,
   BetweenHorizontalStart,
@@ -20,6 +19,9 @@ import {
   Download,
 } from 'lucide-react';
 import { EditorLinkPopover } from './EditorLinkPopover';
+import { useEditorConfig } from './EditorConfig';
+import { EditorImagePopover } from './EditorImagePopover';
+import { EditorImageUpload } from './EditorImageUpload';
 
 type EditorBubbleMenuProps = {
   editor: Editor | null;
@@ -59,6 +61,9 @@ function Btn({
 }
 
 export function EditorBubbleMenu({ editor }: EditorBubbleMenuProps) {
+  const config = useEditorConfig();
+  const { features, image: imageConfig } = config;
+
   if (!editor) return null;
 
   const chain = () => editor.chain().focus();
@@ -99,63 +104,78 @@ export function EditorBubbleMenu({ editor }: EditorBubbleMenuProps) {
         </>
       ) : !editor.state.selection.empty ? (
         <>
-          <Btn title="Paragraph" onClick={() => chain().setParagraph().run()}>
-            <span className="px-1 text-xs font-medium">P</span>
-          </Btn>
-          <Btn title="Heading 1" onClick={() => chain().toggleHeading({ level: 1 }).run()}>
-            <Heading1 size={18} />
-          </Btn>
-          <Btn title="Heading 2" onClick={() => chain().toggleHeading({ level: 2 }).run()}>
-            <Heading2 size={18} />
-          </Btn>
-          <Btn title="Bullet list" onClick={() => chain().toggleBulletList().run()}>
-            <span className="text-xs">•</span>
-          </Btn>
-          <Btn title="Ordered list" onClick={() => chain().toggleOrderedList().run()}>
-            <span className="text-xs">1.</span>
-          </Btn>
-          <Btn title="Task list" onClick={() => chain().toggleTaskList().run()}>
-            <span className="text-xs">☑</span>
-          </Btn>
-          <Btn title="Blockquote" onClick={() => chain().toggleBlockquote().run()}>
-            <span className="text-xs">&ldquo;</span>
-          </Btn>
-          <Btn title="Code block" onClick={() => chain().toggleCodeBlock().run()}>
-            <SquareCode size={18} />
-          </Btn>
+          {features.headings && (
+            <>
+              <Btn title="Paragraph" onClick={() => chain().setParagraph().run()}>
+                <span className="px-1 text-xs font-medium">P</span>
+              </Btn>
+              <Btn title="Heading 1" onClick={() => chain().toggleHeading({ level: 1 }).run()}>
+                <Heading1 size={18} />
+              </Btn>
+              <Btn title="Heading 2" onClick={() => chain().toggleHeading({ level: 2 }).run()}>
+                <Heading2 size={18} />
+              </Btn>
+            </>
+          )}
+
+          {features.lists && (
+            <>
+              <Btn title="Bullet list" onClick={() => chain().toggleBulletList().run()}>
+                <span className="text-xs">•</span>
+              </Btn>
+              <Btn title="Ordered list" onClick={() => chain().toggleOrderedList().run()}>
+                <span className="text-xs">1.</span>
+              </Btn>
+              <Btn title="Task list" onClick={() => chain().toggleTaskList().run()}>
+                <span className="text-xs">☑</span>
+              </Btn>
+            </>
+          )}
+
+          {features.blockquote && (
+            <Btn title="Blockquote" onClick={() => chain().toggleBlockquote().run()}>
+              <span className="text-xs">&ldquo;</span>
+            </Btn>
+          )}
+
+          {features.codeBlock && (
+            <Btn title="Code block" onClick={() => chain().toggleCodeBlock().run()}>
+              <SquareCode size={18} />
+            </Btn>
+          )}
+
+          {features.textFormatting && (
+            <>
+              <div className="mx-0.5 h-6 w-px bg-white/15" />
+              <Btn title="Bold" active={editor.isActive('bold')} onClick={() => chain().toggleBold().run()}>
+                <Bold size={18} />
+              </Btn>
+              <Btn title="Italic" active={editor.isActive('italic')} onClick={() => chain().toggleItalic().run()}>
+                <Italic size={18} />
+              </Btn>
+              <Btn
+                title="Underline"
+                active={editor.isActive('underline')}
+                onClick={() => chain().toggleUnderline().run()}
+              >
+                <Underline size={18} />
+              </Btn>
+              <Btn title="Strikethrough" active={editor.isActive('strike')} onClick={() => chain().toggleStrike().run()}>
+                <Strikethrough size={18} />
+              </Btn>
+              <Btn title="Code" active={editor.isActive('code')} onClick={() => chain().toggleCode().run()}>
+                <Code size={18} />
+              </Btn>
+            </>
+          )}
+
           <div className="mx-0.5 h-6 w-px bg-white/15" />
-          <Btn title="Bold" active={editor.isActive('bold')} onClick={() => chain().toggleBold().run()}>
-            <Bold size={18} />
-          </Btn>
-          <Btn title="Italic" active={editor.isActive('italic')} onClick={() => chain().toggleItalic().run()}>
-            <Italic size={18} />
-          </Btn>
-          <Btn
-            title="Underline"
-            active={editor.isActive('underline')}
-            onClick={() => chain().toggleUnderline().run()}
-          >
-            <Underline size={18} />
-          </Btn>
-          <Btn title="Strikethrough" active={editor.isActive('strike')} onClick={() => chain().toggleStrike().run()}>
-            <Strikethrough size={18} />
-          </Btn>
-          <Btn title="Code" active={editor.isActive('code')} onClick={() => chain().toggleCode().run()}>
-            <Code size={18} />
-          </Btn>
-          <div className="mx-0.5 h-6 w-px bg-white/15" />
-          <EditorLinkPopover editor={editor} />
-          <Btn
-            title="Insert image"
-            onClick={() => {
-              const url = window.prompt('Image URL');
-              if (url) chain().setImage({ src: url }).run();
-            }}
-          >
-            <ImageIcon size={18} />
-          </Btn>
+          {features.link && <EditorLinkPopover editor={editor} />}
+          
+          {features.image && imageConfig.mode === 'url' && <EditorImagePopover editor={editor} />}
+          {features.image && imageConfig.mode === 'upload' && <EditorImageUpload editor={editor} />}
         </>
-      ) : (
+      ) : features.table ? (
         <>
           <Btn
             title="Add row above"
@@ -203,7 +223,7 @@ export function EditorBubbleMenu({ editor }: EditorBubbleMenuProps) {
             <Trash2 size={18} />
           </Btn>
         </>
-      )}
+      ) : null}
     </BubbleMenu>
   );
 }

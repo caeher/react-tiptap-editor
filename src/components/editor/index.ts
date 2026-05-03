@@ -1,4 +1,7 @@
 export { Editor, type EditorProps } from './Editor';
+export { type EditorConfig, type EditorFeatures, type EditorImageConfig, type ImageMode, type ImageUploadResult, DEFAULT_EDITOR_CONFIG, useEditorConfig } from './EditorConfig';
+export { EditorImagePopover } from './EditorImagePopover';
+export { EditorImageUpload } from './EditorImageUpload';
 export { EditorToolbar } from './EditorToolbar';
 export { EditorBubbleMenu } from './EditorBubbleMenu';
 export { EditorLinkPopover } from './EditorLinkPopover';

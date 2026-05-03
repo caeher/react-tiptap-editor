@@ -1,73 +1,118 @@
-# React + TypeScript + Vite
+# @caeher/react-tiptap-editor
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A premium, Notion-style rich text editor for React, built on top of TipTap, Shiki, and Tailwind CSS.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- 🚀 **Modern UI**: Clean, glassmorphic design with smooth animations.
+- ⌨️ **Slash Commands**: Quick insertion of blocks via `/`.
+- 🫧 **Bubble Menu**: Contextual formatting menu on text selection.
+- 🎨 **Code Highlighting**: Beautiful syntax highlighting powered by Shiki.
+- 📝 **Markdown Support**: Seamless markdown input and output.
+- ⚙️ **Highly Configurable**: Enable/disable features and customize image handling.
 
-## React Compiler
+## Installation
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install @caeher/react-tiptap-editor
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Usage
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Basic Example
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```tsx
+import { useState } from 'react';
+import { Editor } from '@caeher/react-tiptap-editor';
+
+function App() {
+  const [content, setContent] = useState('# Hello World');
+
+  return (
+    <Editor 
+      content={content} 
+      onChange={setContent} 
+      placeholder="Start typing..." 
+    />
+  );
+}
 ```
+
+### Configuration
+
+You can customize the editor by passing a `config` prop.
+
+```tsx
+<Editor
+  config={{
+    features: {
+      table: false,       // Disable tables
+      codeBlock: true,    // Enable code blocks
+      slashCommand: true, // Enable slash menu
+    },
+    image: {
+      mode: 'url',        // 'url', 'upload', or 'disabled'
+    }
+  }}
+/>
+```
+
+### Image Upload Support
+
+To enable local image uploads, set the mode to `'upload'` and provide an `onUpload` handler.
+
+```tsx
+<Editor
+  config={{
+    image: {
+      mode: 'upload',
+      accept: 'image/png, image/jpeg',
+      maxFileSize: 10 * 1024 * 1024, // 10MB
+      onUpload: async (file) => {
+        const formData = new FormData();
+        formData.append('file', file);
+
+        const response = await fetch('/api/upload', {
+          method: 'POST',
+          body: formData,
+        });
+
+        const data = await response.json();
+        return { src: data.url };
+      },
+      retrieveBasePath: 'https://cdn.example.com', // Optional base path for relative URLs
+    }
+  }}
+/>
+```
+
+## Configuration Options
+
+### `EditorFeatures`
+
+| Property | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `textFormatting` | `boolean` | `true` | Bold, italic, underline, strike, inline code |
+| `headings` | `boolean` | `true` | H1, H2, H3, H4 |
+| `lists` | `boolean` | `true` | Bullet, ordered, and task lists |
+| `blockquote` | `boolean` | `true` | Blockquote insertion |
+| `codeBlock` | `boolean` | `true` | Shiki-powered code blocks |
+| `table` | `boolean` | `true` | Table insertion and management |
+| `image` | `boolean` | `true` | Image support |
+| `link` | `boolean` | `true` | Link insertion |
+| `horizontalRule` | `boolean` | `true` | Divider line |
+| `slashCommand` | `boolean` | `true` | Slash (`/`) command menu |
+
+### `EditorImageConfig`
+
+| Property | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `mode` | `'url' \| 'upload' \| 'disabled'` | `'url'` | Image insertion method |
+| `onUpload` | `(file: File) => Promise<{ src: string }>` | `undefined` | Required for `'upload'` mode |
+| `retrieveBasePath` | `string` | `undefined` | Prepended to relative URLs |
+| `accept` | `string` | `'image/*'` | Allowed file types |
+| `maxFileSize` | `number` | `5242880` | Max file size in bytes (default 5MB) |
+
+## License
+
+MIT

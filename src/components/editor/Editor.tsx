@@ -5,6 +5,7 @@ import { createEditorExtensions } from './extensions';
 import './editor.css';
 import { EditorToolbar } from './EditorToolbar';
 import { EditorBubbleMenu } from './EditorBubbleMenu';
+import { EditorConfigContext, DEFAULT_EDITOR_CONFIG, type EditorConfig } from './EditorConfig';
 
 function getMarkdown(editor: TiptapEditor): string {
   const storage = editor.storage as { markdown?: { getMarkdown?: () => string } };
@@ -18,7 +19,19 @@ export type EditorProps = {
   placeholder?: string;
   editable?: boolean;
   className?: string;
+  config?: Partial<EditorConfig>;
 };
+
+function mergeConfig(
+  defaults: EditorConfig,
+  overrides?: Partial<EditorConfig>
+): EditorConfig {
+  if (!overrides) return defaults;
+  return {
+    features: { ...defaults.features, ...overrides.features },
+    image: { ...defaults.image, ...overrides.image },
+  };
+}
 
 export function Editor({
   content = '',
@@ -26,8 +39,10 @@ export function Editor({
   placeholder,
   editable = true,
   className = '',
+  config: userConfig,
 }: EditorProps) {
-  const extensions = useMemo(() => createEditorExtensions({ placeholder }), [placeholder]);
+  const config = useMemo(() => mergeConfig(DEFAULT_EDITOR_CONFIG, userConfig), [userConfig]);
+  const extensions = useMemo(() => createEditorExtensions({ placeholder, config }), [placeholder, config]);
 
   const syncingFromParent = useRef(false);
 
@@ -67,12 +82,14 @@ export function Editor({
   }, [editable, editor]);
 
   return (
-    <div
-      className={`overflow-hidden rounded-2xl border border-white/10 bg-slate-900/40 shadow-inner ${className}`}
-    >
-      <EditorToolbar editor={editor} />
-      <EditorBubbleMenu editor={editor} />
-      <EditorContent editor={editor} className="tiptap-root" />
-    </div>
+    <EditorConfigContext.Provider value={config}>
+      <div
+        className={`overflow-hidden rounded-2xl border border-white/10 bg-slate-900/40 shadow-inner ${className}`}
+      >
+        <EditorToolbar editor={editor} />
+        <EditorBubbleMenu editor={editor} />
+        <EditorContent editor={editor} className="tiptap-root" />
+      </div>
+    </EditorConfigContext.Provider>
   );
 }

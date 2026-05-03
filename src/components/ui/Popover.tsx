@@ -10,6 +10,7 @@ interface PopoverProps {
   className?: string;
   matchTriggerWidth?: boolean;
   disabled?: boolean;
+  fullWidth?: boolean;
 }
 
 export const Popover = ({ 
@@ -18,6 +19,7 @@ export const Popover = ({
   className = '', 
   matchTriggerWidth = true,
   disabled = false,
+  fullWidth = false,
 }: PopoverProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const triggerRef = useRef<HTMLDivElement>(null);
@@ -130,10 +132,10 @@ export const Popover = ({
   };
 
   return (
-    <div className={`relative inline-block w-full ${className}`} ref={triggerRef}>
+    <div className={`relative ${fullWidth ? 'w-full' : 'w-fit'} inline-block ${className}`} ref={triggerRef}>
       <div
         onClick={handleToggle}
-        className={`w-full ${disabled ? 'pointer-events-none cursor-not-allowed' : 'cursor-pointer'}`}
+        className={`${fullWidth ? 'w-full' : 'w-fit'} ${disabled ? 'pointer-events-none cursor-not-allowed' : 'cursor-pointer'}`}
         aria-disabled={disabled}
         aria-expanded={isOpen}
         role="button"

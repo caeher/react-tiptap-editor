@@ -22,7 +22,7 @@ export function EditorLinkPopover({ editor }: EditorLinkPopoverProps) {
     };
   }, [editor]);
 
-  const disabled = !editor.isEditable || (editor.state.selection.empty && !editor.isActive('link'));
+  const disabled = !editor.isEditable;
 
   const applyLink = (close: () => void) => {
     if (!url.trim()) return;
@@ -35,9 +35,17 @@ export function EditorLinkPopover({ editor }: EditorLinkPopoverProps) {
     if (hasCode && !isEmpty) {
       ch = ch.extendMarkRange('code').setLink({ href: url.trim() });
     } else {
-      ch = ch.extendMarkRange('link').setLink({ href: url.trim() });
       if (isEmpty) {
-        ch = ch.insertContent(url.trim());
+        ch = ch.insertContent({
+          type: 'text',
+          text: url.trim(),
+          marks: [{ type: 'link', attrs: { href: url.trim() } }],
+        });
+      } else {
+        if (editor.isActive('link')) {
+          ch = ch.extendMarkRange('link');
+        }
+        ch = ch.setLink({ href: url.trim() });
       }
     }
 

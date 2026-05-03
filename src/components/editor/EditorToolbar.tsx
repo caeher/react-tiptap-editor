@@ -16,7 +16,6 @@ import {
   Undo2,
   Redo2,
   ChevronDown,
-  Link as LinkIcon,
   BetweenVerticalStart,
   BetweenVerticalEnd,
   BetweenHorizontalStart,
@@ -26,6 +25,7 @@ import {
   Trash2,
 } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
+import { EditorLinkPopover } from './EditorLinkPopover';
 
 type EditorToolbarProps = {
   editor: Editor | null;
@@ -93,16 +93,6 @@ export function EditorToolbar({ editor }: EditorToolbarProps) {
     if (url) chain().setImage({ src: url }).run();
   };
 
-  const insertLink = () => {
-    const prev = editor.getAttributes('link').href as string | undefined;
-    const url = window.prompt('Link URL', prev ?? 'https://');
-    if (url === null) return;
-    if (url === '') {
-      chain().extendMarkRange('link').unsetLink().run();
-      return;
-    }
-    chain().extendMarkRange('link').setLink({ href: url }).run();
-  };
 
   const headingActive = [1, 2, 3, 4].find((level) => editor.isActive('heading', { level }));
 
@@ -245,9 +235,7 @@ export function EditorToolbar({ editor }: EditorToolbarProps) {
       <ToolbarButton title="Insert image" onClick={insertImageFromUrl}>
         <ImageIcon size={18} />
       </ToolbarButton>
-      <ToolbarButton title="Link" active={editor.isActive('link')} onClick={insertLink}>
-        <LinkIcon size={18} />
-      </ToolbarButton>
+      <EditorLinkPopover editor={editor} />
       <ToolbarButton title="Horizontal rule" onClick={() => chain().setHorizontalRule().run()}>
         <Minus size={18} />
       </ToolbarButton>

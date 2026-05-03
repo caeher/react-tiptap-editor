@@ -61,7 +61,16 @@ export function EditorLinkPopover({ editor }: EditorLinkPopoverProps) {
       disabled={disabled}
       matchTriggerWidth={false}
       trigger={
-        <span className="flex rounded-lg p-2 text-slate-300 hover:bg-white/10 hover:text-white">
+        <span 
+          title="Link"
+          className={`flex rounded-lg p-2 transition ${
+            disabled
+              ? 'cursor-not-allowed text-slate-600'
+              : editor.isActive('link')
+                ? 'bg-cyan-500/25 text-cyan-200'
+                : 'text-slate-300 hover:bg-white/10 hover:text-white'
+          }`}
+        >
           <LinkIcon size={18} />
         </span>
       }

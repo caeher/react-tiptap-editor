@@ -4,6 +4,7 @@ export { EditorImagePopover } from './EditorImagePopover';
 export { EditorImageUpload } from './EditorImageUpload';
 export { EditorToolbar } from './EditorToolbar';
 export { EditorBubbleMenu } from './EditorBubbleMenu';
+export { EditorCodeBlockBar } from './EditorCodeBlockBar';
 export { EditorLinkPopover } from './EditorLinkPopover';
 export { SlashCommandMenu } from './SlashCommandMenu';
 export { createEditorExtensions, createSlashCommandExtension, slashPluginKey } from './extensions';

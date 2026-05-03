@@ -46,12 +46,22 @@ export function createEditorExtensions(options: CreateEditorExtensionsOptions = 
   }) as Extension);
 
   if (features?.codeBlock !== false) {
-    extensions.push(CodeBlockShiki.configure({
-      defaultTheme: 'material-theme-darker',
-      themes: {
-        light: 'material-theme-lighter',
-        dark: 'material-theme-palenight',
+    extensions.push(CodeBlockShiki.extend({
+      addAttributes() {
+        return {
+          ...this.parent?.(),
+          theme: {
+            default: null,
+            parseHTML: (element: HTMLElement) => element.getAttribute('data-theme') || null,
+            renderHTML: (attributes: Record<string, unknown>) => {
+              if (!attributes.theme) return {};
+              return { 'data-theme': attributes.theme };
+            },
+          },
+        };
       },
+    }).configure({
+      defaultTheme: 'material-theme-darker',
     }) as Extension);
   }
 

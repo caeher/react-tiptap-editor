@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef } from 'react';
 import { createEditorExtensions } from './extensions';
 import './editor.css';
 import { EditorToolbar } from './EditorToolbar';
+import { EditorCodeBlockBar } from './EditorCodeBlockBar';
 import { EditorBubbleMenu } from './EditorBubbleMenu';
 import { EditorConfigContext, DEFAULT_EDITOR_CONFIG, type EditorConfig } from './EditorConfig';
 
@@ -87,6 +88,7 @@ export function Editor({
         className={`overflow-hidden rounded-2xl border border-white/10 bg-slate-900/40 shadow-inner ${className}`}
       >
         <EditorToolbar editor={editor} />
+        <EditorCodeBlockBar editor={editor} />
         <EditorBubbleMenu editor={editor} />
         <EditorContent editor={editor} className="tiptap-root" />
       </div>

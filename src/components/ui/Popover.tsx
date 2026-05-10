@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect, type ReactNode, useLayoutEffect, useCallback } from 'react';
 import { Portal } from './Portal';
+import { useEditorConfig } from '../editor/EditorConfig';
 
 const GAP = 8;
 const VIEWPORT_MARGIN = 8;
@@ -21,7 +22,9 @@ export const Popover = ({
   disabled = false,
   fullWidth = false,
 }: PopoverProps) => {
+  const { theme } = useEditorConfig();
   const [isOpen, setIsOpen] = useState(false);
+  // ... (rest of the component)
   const triggerRef = useRef<HTMLDivElement>(null);
   const popoverRef = useRef<HTMLDivElement>(null);
   const [coords, setCoords] = useState({ top: 0, left: 0, width: 0 });
@@ -159,9 +162,9 @@ export const Popover = ({
               transition: ready ? 'opacity 150ms ease-out, transform 150ms ease-out' : 'none',
               transformOrigin: placement === 'top' ? 'bottom' : 'top',
             }}
-            className={`${!matchTriggerWidth ? 'md:w-max' : ''}`}
+            className={`${!matchTriggerWidth ? 'md:w-max' : ''} ${theme === 'dark' ? 'dark' : ''}`}
           >
-            <div className="rounded-xl border border-white/10 bg-slate-900/95 backdrop-blur-md shadow-2xl overflow-hidden">
+            <div className="rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/95 backdrop-blur-md shadow-2xl overflow-hidden text-slate-900 dark:text-slate-100">
               {content(() => setIsOpen(false))}
             </div>
           </div>

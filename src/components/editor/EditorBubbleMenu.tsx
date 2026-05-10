@@ -44,15 +44,16 @@ function Btn({
     <button
       type="button"
       title={title}
+      aria-label={title}
       disabled={disabled}
       onMouseDown={(e) => e.preventDefault()}
       onClick={onClick}
-      className={`rounded-lg p-2 ${
+      className={`rounded-lg p-2 transition ${
         disabled
-          ? 'cursor-not-allowed text-slate-600'
+          ? 'cursor-not-allowed text-slate-400 dark:text-slate-600'
           : active
-            ? 'bg-cyan-500/25 text-cyan-200'
-            : 'text-slate-200 hover:bg-white/10'
+            ? 'bg-cyan-500/20 text-cyan-600 dark:bg-cyan-500/25 dark:text-cyan-200'
+            : 'text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-white/10'
       }`}
     >
       {children}
@@ -80,7 +81,7 @@ export function EditorBubbleMenu({ editor }: EditorBubbleMenuProps) {
     <BubbleMenu
       editor={editor}
       shouldShow={() => showBubble()}
-      className="flex max-w-[min(100vw-2rem,520px)] flex-wrap items-center gap-1 rounded-xl border border-white/10 bg-slate-900/98 p-1 shadow-2xl"
+      className="flex max-w-[min(100vw-2rem,520px)] flex-wrap items-center gap-1 rounded-xl border border-slate-200 dark:border-white/10 bg-white/98 dark:bg-slate-900/98 p-1 shadow-2xl"
     >
       {editor.isActive('image') ? (
         <>
@@ -146,7 +147,7 @@ export function EditorBubbleMenu({ editor }: EditorBubbleMenuProps) {
 
           {features.textFormatting && (
             <>
-              <div className="mx-0.5 h-6 w-px bg-white/15" />
+          <div className="mx-0.5 h-6 w-px bg-slate-200 dark:bg-white/15" />
               <Btn title="Bold" active={editor.isActive('bold')} onClick={() => chain().toggleBold().run()}>
                 <Bold size={18} />
               </Btn>

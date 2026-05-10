@@ -6,7 +6,7 @@ import './editor.css';
 import { EditorToolbar } from './EditorToolbar';
 import { EditorCodeBlockBar } from './EditorCodeBlockBar';
 import { EditorBubbleMenu } from './EditorBubbleMenu';
-import { EditorConfigContext, DEFAULT_EDITOR_CONFIG, type EditorConfig } from './EditorConfig';
+import { EditorConfigContext, DEFAULT_EDITOR_CONFIG, type EditorConfig, uploadImage } from './EditorConfig';
 
 function getMarkdown(editor: TiptapEditor): string {
   const storage = editor.storage as { markdown?: { getMarkdown?: () => string } };
@@ -21,6 +21,7 @@ export type EditorProps = {
   editable?: boolean;
   className?: string;
   config?: Partial<EditorConfig>;
+  toolbarExtra?: React.ReactNode;
 };
 
 function mergeConfig(
@@ -31,6 +32,7 @@ function mergeConfig(
   return {
     features: { ...defaults.features, ...overrides.features },
     image: { ...defaults.image, ...overrides.image },
+    theme: overrides.theme ?? defaults.theme,
   };
 }
 
@@ -41,6 +43,7 @@ export function Editor({
   editable = true,
   className = '',
   config: userConfig,
+  toolbarExtra,
 }: EditorProps) {
   const config = useMemo(() => mergeConfig(DEFAULT_EDITOR_CONFIG, userConfig), [userConfig]);
   const extensions = useMemo(() => createEditorExtensions({ placeholder, config }), [placeholder, config]);
@@ -56,7 +59,27 @@ export function Editor({
       editorProps: {
         attributes: {
           class:
-            'tiptap-editor-shell prose prose-invert max-w-none min-h-[280px] px-4 py-3 text-[15px] leading-relaxed text-slate-100 focus:outline-none prose-headings:text-slate-50 prose-a:text-cyan-400 prose-strong:text-slate-50',
+            'tiptap-editor-shell prose max-w-none min-h-[280px] px-4 py-3 text-[15px] leading-relaxed focus:outline-none dark:prose-invert text-slate-900 dark:text-slate-100 prose-headings:text-slate-900 dark:prose-headings:text-slate-50 prose-a:text-cyan-600 dark:prose-a:text-cyan-400 prose-strong:text-slate-900 dark:prose-strong:text-slate-50',
+        },
+        handleDrop: (_view, event, _slice, moved) => {
+          if (!moved && event.dataTransfer && event.dataTransfer.files && event.dataTransfer.files[0]) {
+            const file = event.dataTransfer.files[0];
+            if (file.type.startsWith('image/') && editor) {
+              uploadImage(file, config.image, editor);
+              return true;
+            }
+          }
+          return false;
+        },
+        handlePaste: (_view, event) => {
+          if (event.clipboardData && event.clipboardData.files && event.clipboardData.files[0]) {
+            const file = event.clipboardData.files[0];
+            if (file.type.startsWith('image/') && editor) {
+              uploadImage(file, config.image, editor);
+              return true;
+            }
+          }
+          return false;
         },
       },
       onUpdate: ({ editor: ed }) => {
@@ -85,9 +108,11 @@ export function Editor({
   return (
     <EditorConfigContext.Provider value={config}>
       <div
-        className={`overflow-hidden rounded-2xl border border-white/10 bg-slate-900/40 shadow-inner ${className}`}
+        className={`overflow-hidden rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/40 shadow-sm dark:shadow-inner ${
+          config.theme === 'dark' ? 'dark' : ''
+        } ${className}`}
       >
-        <EditorToolbar editor={editor} />
+        <EditorToolbar editor={editor} extra={toolbarExtra} />
         <EditorCodeBlockBar editor={editor} />
         <EditorBubbleMenu editor={editor} />
         <EditorContent editor={editor} className="tiptap-root" />

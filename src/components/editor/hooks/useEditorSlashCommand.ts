@@ -1,5 +1,6 @@
 import type { Editor, Range } from '@tiptap/core';
 import type { EditorConfig, EditorFeatures } from '../EditorConfig';
+import { uploadImage } from '../EditorConfig';
 
 export type SlashItem = {
   id: string;
@@ -125,28 +126,15 @@ export function getSlashItems(config?: EditorConfig): SlashItem[] {
       keywords: ['photo', 'picture'],
       command: ({ editor, range }) => {
         if (imageConfig?.mode === 'upload') {
-          // Trigger file picker
           const input = document.createElement('input');
           input.type = 'file';
           input.accept = imageConfig.accept ?? 'image/*';
           input.onchange = async (e: Event) => {
             const target = e.target as HTMLInputElement;
             const file = target.files?.[0];
-            if (file && imageConfig.onUpload) {
+            if (file) {
               deleteSlashTrigger(editor, range);
-              try {
-                const result = await imageConfig.onUpload(file);
-                // Simple resolve logic here as well
-                let src = result.src;
-                if (!src.startsWith('http') && !src.startsWith('data:') && imageConfig.retrieveBasePath) {
-                   const base = imageConfig.retrieveBasePath.replace(/\/$/, '');
-                   const path = src.startsWith('/') ? src : `/${src}`;
-                   src = `${base}${path}`;
-                }
-                editor.chain().focus().setImage({ src }).run();
-              } catch (err) {
-                console.error(err);
-              }
+              await uploadImage(file, imageConfig, editor);
             }
           };
           input.click();
@@ -171,12 +159,18 @@ export function getSlashItems(config?: EditorConfig): SlashItem[] {
     },
   ];
 
-  return all.filter((item) => {
+  const filtered = all.filter((item) => {
     if (item.featureKey && features && features[item.featureKey] === false) {
       return false;
     }
     return true;
   });
+
+  if (config?.customSlashItems) {
+    return [...filtered, ...config.customSlashItems];
+  }
+
+  return filtered;
 }
 
 export function useEditorSlashCommand(config?: EditorConfig) {

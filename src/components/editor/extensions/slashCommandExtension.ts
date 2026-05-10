@@ -58,6 +58,7 @@ export function createSlashCommandExtension(config?: EditorConfig) {
 
             return {
               onStart: (props: SuggestionProps<SlashItem>) => {
+                const isDark = config?.theme === 'dark';
                 renderer = new ReactRenderer(SlashCommandMenu, {
                   editor: props.editor,
                   props: {
@@ -67,7 +68,7 @@ export function createSlashCommandExtension(config?: EditorConfig) {
                     },
                   },
                   as: 'div',
-                  className: 'slash-command-root',
+                  className: `slash-command-root ${isDark ? 'dark' : ''}`,
                 });
                 document.body.appendChild(renderer.element);
                 positionSlashMenu(renderer, props.clientRect);

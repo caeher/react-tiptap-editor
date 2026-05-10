@@ -5,6 +5,8 @@ import { TaskItem, TaskList } from '@tiptap/extension-list';
 import Image from '@tiptap/extension-image';
 import Placeholder from '@tiptap/extension-placeholder';
 import Typography from '@tiptap/extension-typography';
+import Underline from '@tiptap/extension-underline';
+import Dropcursor from '@tiptap/extension-dropcursor';
 import { Markdown } from 'tiptap-markdown';
 import type { Extension } from '@tiptap/core';
 import { createSlashCommandExtension } from './slashCommandExtension';
@@ -39,6 +41,7 @@ export function createEditorExtensions(options: CreateEditorExtensionsOptions = 
     italic: features?.textFormatting !== false ? {} : false,
     strike: features?.textFormatting !== false ? {} : false,
     code: features?.textFormatting !== false ? {} : false,
+    underline: features?.textFormatting !== false ? {} : false,
     blockquote: features?.blockquote !== false ? {} : false,
     bulletList: features?.lists !== false ? {} : false,
     orderedList: features?.lists !== false ? {} : false,
@@ -95,6 +98,11 @@ export function createEditorExtensions(options: CreateEditorExtensionsOptions = 
   }) as Extension);
 
   extensions.push(Typography as Extension);
+  extensions.push(Underline as Extension);
+  extensions.push(Dropcursor.configure({
+    color: 'var(--te-ring-selected)',
+    width: 2,
+  }) as Extension);
 
   extensions.push(Markdown.configure({
     html: false,

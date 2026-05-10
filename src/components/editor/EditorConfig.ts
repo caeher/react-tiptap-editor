@@ -3,6 +3,9 @@ import { createContext, useContext } from 'react';
 /** Image handling modes */
 export type ImageMode = 'url' | 'upload' | 'disabled';
 
+/** Editor theme options */
+export type EditorTheme = 'light' | 'dark' | 'system';
+
 export interface ImageUploadResult {
   /** The final URL to embed in the editor */
   src: string;
@@ -56,6 +59,10 @@ export interface EditorFeatures {
 export interface EditorConfig {
   features: EditorFeatures;
   image: EditorImageConfig;
+  /** Theme mode. Default: 'dark' */
+  theme?: EditorTheme;
+  /** Custom slash command items to append to the default list */
+  customSlashItems?: any[]; // Using any[] for now to avoid circular dependency, will refine if needed
 }
 
 export const DEFAULT_EDITOR_CONFIG: EditorConfig = {
@@ -74,10 +81,52 @@ export const DEFAULT_EDITOR_CONFIG: EditorConfig = {
   image: {
     mode: 'url',
   },
+  theme: 'dark',
 };
 
 export const EditorConfigContext = createContext<EditorConfig>(DEFAULT_EDITOR_CONFIG);
 
 export function useEditorConfig(): EditorConfig {
   return useContext(EditorConfigContext);
+}
+
+/** Resolves an image source based on configuration */
+export function resolveImageSrc(result: ImageUploadResult, config: EditorImageConfig): string {
+  const { src } = result;
+  if (src.startsWith('http://') || src.startsWith('https://') || src.startsWith('data:')) {
+    return src;
+  }
+  if (config.retrieveBasePath) {
+    const base = config.retrieveBasePath.replace(/\/$/, '');
+    const path = src.startsWith('/') ? src : `/${src}`;
+    return `${base}${path}`;
+  }
+  return src;
+}
+
+/** Handles the image upload process */
+export async function uploadImage(
+  file: File,
+  config: EditorImageConfig,
+  editor: any
+): Promise<void> {
+  const maxSize = config.maxFileSize ?? 5 * 1024 * 1024;
+  if (file.size > maxSize) {
+    alert(`File is too large. Max size is ${Math.round(maxSize / 1024 / 1024)}MB.`);
+    return;
+  }
+
+  if (!config.onUpload) {
+    console.error('EditorConfig: onUpload is required for mode: "upload"');
+    return;
+  }
+
+  try {
+    const result = await config.onUpload(file);
+    const resolvedSrc = resolveImageSrc(result, config);
+    editor.chain().focus().setImage({ src: resolvedSrc }).run();
+  } catch (error) {
+    console.error('Failed to upload image:', error);
+    alert('Failed to upload image. Please try again.');
+  }
 }

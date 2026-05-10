@@ -85,5 +85,8 @@
     "@semantic-release/npm": {
       "npm": "^11.14.1"
     }
+  },
+  "dependencies": {
+    "@tiptap/extension-dropcursor": "^3.23.1"
   }
 }

@@ -1,10 +1,30 @@
 /* TipTap editor chrome — aligned with Nuxt UI editor template table/task/code styles */
 
+:root {
+  --te-border: rgb(226 232 240);
+  --te-border-muted: rgb(226 232 240 / 0.5);
+  --te-bg-header: rgb(248 250 252 / 0.8);
+  --te-bg-selected: rgb(34 211 238 / 0.1);
+  --te-ring-selected: rgb(34 211 238 / 0.6);
+  --te-ring-offset: rgb(255 255 255);
+}
+
+.dark, [data-theme='dark'] {
+  --te-border: rgb(51 65 85);
+  --te-border-muted: rgb(51 65 85 / 0.5);
+  --te-bg-header: rgb(15 23 42 / 0.5);
+  --te-bg-selected: rgb(34 211 238 / 0.1);
+  --te-ring-selected: rgb(34 211 238 / 0.6);
+  --te-ring-offset: rgb(15 23 42);
+}
+
 .tiptap-editor-shell table {
   border-collapse: separate;
   border-spacing: 0;
   width: 100%;
   border-radius: 0.375rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 
 .tiptap-editor-shell th {
@@ -12,26 +32,26 @@
   font-weight: 600;
   font-size: 0.875rem;
   text-align: left;
-  background-color: rgb(15 23 42 / 0.5);
-  border-top: 1px solid rgb(51 65 85 / 0.5);
-  border-bottom: 1px solid rgb(51 65 85 / 0.5);
-  border-inline-end: 1px solid rgb(51 65 85 / 0.5);
+  background-color: var(--te-bg-header);
+  border-top: 1px solid var(--te-border-muted);
+  border-bottom: 1px solid var(--te-border-muted);
+  border-inline-end: 1px solid var(--te-border-muted);
 }
 
 .tiptap-editor-shell th:first-child {
-  border-inline-start: 1px solid rgb(51 65 85 / 0.5);
+  border-inline-start: 1px solid var(--te-border-muted);
 }
 
 .tiptap-editor-shell td {
   padding: 0.75rem 1rem;
   font-size: 0.875rem;
   text-align: left;
-  border-bottom: 1px solid rgb(51 65 85 / 0.5);
-  border-inline-end: 1px solid rgb(51 65 85 / 0.5);
+  border-bottom: 1px solid var(--te-border-muted);
+  border-inline-end: 1px solid var(--te-border-muted);
 }
 
 .tiptap-editor-shell td:first-child {
-  border-inline-start: 1px solid rgb(51 65 85 / 0.5);
+  border-inline-start: 1px solid var(--te-border-muted);
 }
 
 .tiptap-editor-shell td p,
@@ -57,10 +77,10 @@
 }
 
 .tiptap-editor-shell .selectedCell {
-  background-color: rgb(34 211 238 / 0.1);
+  background-color: var(--te-bg-selected);
   box-shadow:
-    inset 0 0 0 2px rgb(34 211 238 / 0.6),
-    inset 0 0 0 2px rgb(15 23 42);
+    inset 0 0 0 2px var(--te-ring-selected),
+    inset 0 0 0 2px var(--te-ring-offset);
 }
 
 /* Task lists */
@@ -85,7 +105,7 @@
   width: 1rem;
   height: 1rem;
   border-radius: 0.125rem;
-  border: 1px solid rgb(51 65 85 / 0.8);
+  border: 1px solid var(--te-border);
   background-position: center;
   cursor: pointer;
 }

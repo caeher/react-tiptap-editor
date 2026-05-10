@@ -1,3 +1,16 @@
+# [1.2.0](https://github.com/caeher/react-tiptap-editor/compare/v1.1.0...v1.2.0) (2026-05-10)
+
+
+### Bug Fixes
+
+* re-export SlashItem from useEditorSlashCommand to fix broken imports ([3c5d72c](https://github.com/caeher/react-tiptap-editor/commit/3c5d72cb78e750e0f340b53731669760de804550))
+* resolve lint errors and avoid circular dependencies by refactoring types ([1b5d3be](https://github.com/caeher/react-tiptap-editor/commit/1b5d3bec9f4ef6866aabc04da80b94cbad772341))
+
+
+### Features
+
+* implement comprehensive editor improvements including theming, extensibility, and accessibility ([58188ca](https://github.com/caeher/react-tiptap-editor/commit/58188ca123fb23d74ca88fb6e139957a33a4efd3))
+
 # [1.1.0](https://github.com/caeher/react-tiptap-editor/compare/v1.0.0...v1.1.0) (2026-05-10)
 
 

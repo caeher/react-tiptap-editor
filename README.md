@@ -124,17 +124,11 @@ We welcome contributions to `@caeher/react-tiptap-editor`! Follow these steps to
    npm install
    ```
 
-4. **Run the development server**
-   ```bash
-   npm run dev
-   ```
-   This will start a Vite development server where you can test your changes in `src/App.tsx`.
-
-5. **Make your changes**
+4. **Make your changes**
    - The editor components are located in `src/components/editor`.
    - Make sure your code follows the existing style.
    - Run `npm run lint` to check for formatting or linting errors.
 
-6. **Submit a Pull Request**
+5. **Submit a Pull Request**
    - Commit your changes with descriptive messages.
    - Push to your fork and submit a PR to the `main` branch of the original repository.

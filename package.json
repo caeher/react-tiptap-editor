@@ -1,6 +1,6 @@
 {
   "name": "@caeher/react-tiptap-editor",
-  "version": "1.3.1",
+  "version": "1.4.0",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -18,7 +18,9 @@
     "dist"
   ],
   "scripts": {
+    "dev": "vite",
     "build": "tsup src/index.ts --format esm,cjs --dts --minify --clean && npx tailwindcss -i src/index.css -o dist/index.css --minify",
+    "preview": "vite preview",
     "lint": "eslint .",
     "prepublishOnly": "npm run build"
   },
@@ -57,6 +59,7 @@
     "@types/node": "^25.6.2",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.1",
     "eslint": "^10.2.1",
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.2",
@@ -70,7 +73,8 @@
     "tiptap-markdown": "^0.9.0",
     "tsup": "^8.5.1",
     "typescript": "~6.0.2",
-    "typescript-eslint": "^8.58.2"
+    "typescript-eslint": "^8.58.2",
+    "vite": "^8.0.11"
   },
   "dependencies": {
     "@tiptap/extension-dropcursor": "^3.23.1"

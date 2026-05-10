@@ -1,5 +1,6 @@
 import type { Editor, Range } from '@tiptap/core';
 import type { EditorConfig, SlashItem } from '../EditorConfig';
+export type { SlashItem };
 import { uploadImage } from '../EditorConfig';
 
 function deleteSlashTrigger(editor: Editor, range: Range) {

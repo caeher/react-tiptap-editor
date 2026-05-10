@@ -209,41 +209,37 @@ function DropdownSelect({
 }
 
 export function EditorCodeBlockBar({ editor }: EditorCodeBlockBarProps) {
-  const [isCodeBlock, setIsCodeBlock] = useState(false);
-  const [currentLanguage, setCurrentLanguage] = useState('');
-  const [currentTheme, setCurrentTheme] = useState('material-theme-darker');
-
-  const syncState = useCallback(() => {
-    if (!editor) return;
-    const active = editor.isActive('codeBlock');
-    setIsCodeBlock(active);
-    if (active) {
-      const attrs = editor.getAttributes('codeBlock');
-      setCurrentLanguage((attrs.language as string) || '');
-      setCurrentTheme((attrs.theme as string) || 'material-theme-darker');
-    }
-  }, [editor]);
+  const [, setTick] = useState(0);
+  const forceUpdate = useCallback(() => setTick((t) => t + 1), []);
 
   useEffect(() => {
     if (!editor) return;
-    editor.on('selectionUpdate', syncState);
-    editor.on('update', syncState);
-    syncState();
+    editor.on('selectionUpdate', forceUpdate);
+    editor.on('update', forceUpdate);
     return () => {
-      editor.off('selectionUpdate', syncState);
-      editor.off('update', syncState);
+      editor.off('selectionUpdate', forceUpdate);
+      editor.off('update', forceUpdate);
     };
-  }, [editor, syncState]);
+  }, [editor, forceUpdate]);
 
-  if (!editor || !isCodeBlock) return null;
+  if (!editor) return null;
+
+  const isCodeBlock = editor.isActive('codeBlock');
+  if (!isCodeBlock) return null;
+
+  const attrs = editor.getAttributes('codeBlock');
+  const currentLanguage = (attrs.language as string) || '';
+  const currentTheme = (attrs.theme as string) || 'material-theme-darker';
 
   const handleLanguageChange = (lang: string) => {
-    setCurrentLanguage(lang);
-    editor.chain().focus().updateAttributes('codeBlock', { language: lang || null }).run();
+    editor
+      .chain()
+      .focus()
+      .updateAttributes('codeBlock', { language: lang || null })
+      .run();
   };
 
   const handleThemeChange = (theme: string) => {
-    setCurrentTheme(theme);
     editor.chain().focus().updateAttributes('codeBlock', { theme }).run();
   };
 

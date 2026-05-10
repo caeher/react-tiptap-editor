@@ -10,28 +10,33 @@ A feature-rich, Tailwind CSS-styled React rich text editor built on top of Tipta
 
 ## Installation
 
-Install the package via your preferred package manager:
+Install the package and its peer dependencies:
 
 ```bash
-npm install @caeher/react-tiptap-editor
-# or
-yarn add @caeher/react-tiptap-editor
-# or
-pnpm add @caeher/react-tiptap-editor
+npm install @caeher/react-tiptap-editor @tiptap/core @tiptap/react @tiptap/starter-kit @tiptap/pm
 ```
 
-### Troubleshooting Peer Dependencies
+> [!NOTE]
+> This library has **zero runtime dependencies** other than its peer dependencies, which significantly reduces the risk of version conflicts in complex projects like Next.js.
 
-If you encounter `ERESOLVE` or peer dependency conflicts during installation (especially in projects with complex dependency trees like those using Next.js or Storybook), you can bypass strict peer resolution by using the `--legacy-peer-deps` flag:
+### Peer Dependencies
+
+Ensure you have the following installed in your project:
+- `react` (v18 or v19)
+- `react-dom` (v18 or v19)
+- `@tiptap/core`
+- `@tiptap/react`
+- `@tiptap/starter-kit`
+- `@tiptap/pm`
+
+If you encounter `ERESOLVE` warnings during installation, you can use the `--legacy-peer-deps` flag.
+
+### Tailwind Typography
+
+This editor uses Tailwind CSS `prose` classes for styling. To ensure these styles are generated, you must have the `@tailwindcss/typography` plugin installed and configured in your project:
 
 ```bash
-npm install @caeher/react-tiptap-editor --legacy-peer-deps
-```
-
-Also, make sure you have the required peer dependencies installed:
-
-```bash
-npm install @tiptap/core @tiptap/react @tiptap/starter-kit @tiptap/pm
+npm install -D @tailwindcss/typography
 ```
 
 ## Configuring Tailwind CSS 4.x

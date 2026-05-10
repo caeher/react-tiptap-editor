@@ -20,6 +20,14 @@ yarn add @caeher/react-tiptap-editor
 pnpm add @caeher/react-tiptap-editor
 ```
 
+### Troubleshooting Peer Dependencies
+
+If you encounter `ERESOLVE` or peer dependency conflicts during installation (especially in projects with complex dependency trees like those using Next.js or Storybook), you can bypass strict peer resolution by using the `--legacy-peer-deps` flag:
+
+```bash
+npm install @caeher/react-tiptap-editor --legacy-peer-deps
+```
+
 Also, make sure you have the required peer dependencies installed:
 
 ```bash

@@ -57,10 +57,10 @@ function ToolbarButton({
       onClick={onClick}
       className={`rounded-lg p-2 transition ${
         disabled
-          ? 'cursor-not-allowed text-slate-400 dark:text-slate-600'
+          ? 'cursor-not-allowed text-[var(--te-text-muted)] opacity-50'
           : active
-            ? 'bg-cyan-500/20 text-cyan-600 dark:bg-cyan-500/25 dark:text-cyan-200'
-            : 'text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white'
+            ? 'bg-[var(--te-accent)]/20 text-[var(--te-accent)]'
+            : 'text-[var(--te-text-muted)] hover:bg-[var(--te-bg-hover)] hover:text-[var(--te-text)]'
       }`}
     >
       {children}
@@ -86,8 +86,8 @@ export function EditorToolbar({ editor, extra }: EditorToolbarProps) {
 
   if (!editor) {
     return (
-      <div className="flex flex-wrap gap-1 border-b border-slate-200 dark:border-white/10 px-2 py-2">
-        <span className="text-xs text-slate-500">Loading editor…</span>
+      <div className="flex flex-wrap gap-1 border-b border-[var(--te-border-muted)] px-2 py-2">
+        <span className="text-xs text-[var(--te-text-muted)]">Loading editor…</span>
       </div>
     );
   }
@@ -97,7 +97,7 @@ export function EditorToolbar({ editor, extra }: EditorToolbarProps) {
   const headingActive = [1, 2, 3, 4].find((level) => editor.isActive('heading', { level }));
 
   return (
-    <div className="flex flex-wrap items-center gap-1 border-b border-slate-200 dark:border-white/10 px-2 py-2">
+    <div className="flex flex-wrap items-center gap-1 border-b border-[var(--te-border-muted)] px-2 py-2">
       <ToolbarButton title="Undo" onClick={() => chain().undo().run()} disabled={!editor.can().undo()}>
         <Undo2 size={18} />
       </ToolbarButton>
@@ -105,7 +105,7 @@ export function EditorToolbar({ editor, extra }: EditorToolbarProps) {
         <Redo2 size={18} />
       </ToolbarButton>
 
-      <div className="mx-1 h-6 w-px bg-slate-200 dark:bg-white/10" />
+      <div className="mx-1 h-6 w-px bg-[var(--te-border-muted)]" />
 
       {features.headings && (
         <div className="relative" ref={headingRef}>
@@ -115,7 +115,7 @@ export function EditorToolbar({ editor, extra }: EditorToolbarProps) {
             aria-label="Heading level"
             onMouseDown={(e) => e.preventDefault()}
             onClick={() => setHeadingOpen((o) => !o)}
-            className="flex items-center gap-1 rounded-lg px-2 py-2 text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/10"
+            className="flex items-center gap-1 rounded-lg px-2 py-2 text-sm text-[var(--te-text-muted)] hover:bg-[var(--te-bg-hover)] hover:text-[var(--te-text)]"
           >
             {headingActive ? (
               <span className="font-medium">H{headingActive}</span>
@@ -125,10 +125,10 @@ export function EditorToolbar({ editor, extra }: EditorToolbarProps) {
             <ChevronDown size={14} />
           </button>
           {headingOpen && (
-            <div className="absolute left-0 top-full z-20 mt-1 min-w-[160px] rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900 py-1 shadow-xl">
+            <div className="absolute left-0 top-full z-20 mt-1 min-w-[160px] rounded-xl border border-[var(--te-border-muted)] bg-[var(--te-bg-surface)] py-1 shadow-xl">
               <button
                 type="button"
-                className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm text-slate-600 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-white/10"
+                className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm text-[var(--te-text-muted)] hover:bg-[var(--te-bg-hover)] hover:text-[var(--te-text)]"
                 onMouseDown={(e) => e.preventDefault()}
                 onClick={() => {
                   chain().setParagraph().run();
@@ -141,7 +141,7 @@ export function EditorToolbar({ editor, extra }: EditorToolbarProps) {
                 <button
                   key={level}
                   type="button"
-                  className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm text-slate-600 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-white/10"
+                  className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm text-[var(--te-text-muted)] hover:bg-[var(--te-bg-hover)] hover:text-[var(--te-text)]"
                   onMouseDown={(e) => e.preventDefault()}
                   onClick={() => {
                     chain().toggleHeading({ level: level as 1 | 2 | 3 | 4 }).run();
@@ -196,7 +196,7 @@ export function EditorToolbar({ editor, extra }: EditorToolbarProps) {
         </>
       )}
 
-      <div className="mx-1 h-6 w-px bg-white/10" />
+      <div className="mx-1 h-6 w-px bg-[var(--te-border-muted)]" />
 
       {features.lists && (
         <>
@@ -244,7 +244,7 @@ export function EditorToolbar({ editor, extra }: EditorToolbarProps) {
         </ToolbarButton>
       )}
 
-      <div className="mx-1 h-6 w-px bg-white/10" />
+      <div className="mx-1 h-6 w-px bg-[var(--te-border-muted)]" />
 
       {features.table && (
         <ToolbarButton title="Insert table" onClick={() => chain().insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run()}>
@@ -265,7 +265,7 @@ export function EditorToolbar({ editor, extra }: EditorToolbarProps) {
 
       {features.table && (
         <>
-          <div className="mx-1 h-6 w-px bg-slate-200 dark:bg-white/10" />
+          <div className="mx-1 h-6 w-px bg-[var(--te-border-muted)]" />
           <ToolbarButton
             title="Add row above"
             disabled={!editor.can().addRowBefore()}
@@ -320,7 +320,7 @@ export function EditorToolbar({ editor, extra }: EditorToolbarProps) {
 
       {extra && (
         <>
-          <div className="mx-1 h-6 w-px bg-slate-200 dark:bg-white/10" />
+          <div className="mx-1 h-6 w-px bg-[var(--te-border-muted)]" />
           <div className="flex items-center gap-1">{extra}</div>
         </>
       )}

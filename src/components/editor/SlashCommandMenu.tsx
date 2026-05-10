@@ -46,20 +46,20 @@ export const SlashCommandMenu = forwardRef<SlashCommandMenuRef, SlashCommandMenu
 
     if (!items.length) {
       return (
-        <div className="max-h-72 min-w-[220px] overflow-auto rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/98 px-3 py-2 text-sm text-slate-500 dark:text-slate-400 shadow-2xl">
+        <div className="max-h-72 min-w-[220px] overflow-auto rounded-xl border border-[var(--te-border-muted)] bg-[var(--te-bg-surface)] px-3 py-2 text-sm text-[var(--te-text-muted)] shadow-2xl">
           No matches
         </div>
       );
     }
 
     return (
-      <div className="max-h-72 min-w-[220px] overflow-auto rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/98 py-1 shadow-2xl">
+      <div className="max-h-72 min-w-[220px] overflow-auto rounded-xl border border-[var(--te-border-muted)] bg-[var(--te-bg-surface)] py-1 shadow-2xl">
         {items.map((item, index) => (
           <button
             key={item.id}
             type="button"
             className={`flex w-full items-center gap-2 px-3 py-2 text-left text-sm transition ${
-              index === selectedIndex ? 'bg-cyan-500/20 text-cyan-700 dark:text-cyan-100' : 'text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-white/5'
+              index === selectedIndex ? 'bg-[var(--te-accent)]/20 text-[var(--te-accent)]' : 'text-[var(--te-text-muted)] hover:bg-[var(--te-bg-hover)] hover:text-[var(--te-text)]'
             }`}
             onMouseDown={(e) => e.preventDefault()}
             onClick={() => command(item)}

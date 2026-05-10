@@ -147,8 +147,8 @@ function DropdownSelect({
         }}
         className={`flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-medium transition
           ${open
-            ? 'bg-cyan-500/20 text-cyan-600 dark:text-cyan-200'
-            : 'text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-white/10 dark:hover:text-slate-200'
+            ? 'bg-[var(--te-accent)]/20 text-[var(--te-accent)]'
+            : 'text-[var(--te-text-muted)] hover:bg-[var(--te-bg-hover)] hover:text-[var(--te-text)]'
           }`}
       >
         {icon}
@@ -160,22 +160,22 @@ function DropdownSelect({
       </button>
 
       {open && (
-        <div className="absolute left-0 top-full z-50 mt-1 min-w-[200px] max-h-[280px] overflow-hidden rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/98 shadow-2xl backdrop-blur-md flex flex-col">
+        <div className="absolute left-0 top-full z-50 mt-1 min-w-[200px] max-h-[280px] overflow-hidden rounded-xl border border-[var(--te-border-muted)] bg-[var(--te-bg-surface)] shadow-2xl backdrop-blur-md flex flex-col">
           {searchable && (
-            <div className="flex items-center gap-2 border-b border-slate-100 dark:border-white/10 px-3 py-2">
-              <Search size={14} className="text-slate-400 dark:text-slate-500 shrink-0" />
+            <div className="flex items-center gap-2 border-b border-[var(--te-border-muted)] px-3 py-2">
+              <Search size={14} className="text-[var(--te-text-muted)] shrink-0" />
               <input
                 ref={searchRef}
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search…"
-                className="w-full bg-transparent text-xs text-slate-700 dark:text-slate-200 placeholder:text-slate-500 outline-none"
+                className="w-full bg-transparent text-xs text-[var(--te-text)] placeholder:text-[var(--te-text-muted)] outline-none"
               />
             </div>
           )}
           <div className="overflow-y-auto py-1 custom-scroll">
             {filtered.length === 0 ? (
-              <div className="px-3 py-2 text-xs text-slate-500">No matches</div>
+              <div className="px-3 py-2 text-xs text-[var(--te-text-muted)]">No matches</div>
             ) : (
               filtered.map((opt) => (
                 <button
@@ -189,12 +189,12 @@ function DropdownSelect({
                   }}
                   className={`flex w-full items-center gap-2 px-3 py-1.5 text-left text-xs transition
                     ${opt.value === value
-                      ? 'bg-cyan-500/10 text-cyan-600 dark:bg-cyan-500/15 dark:text-cyan-200'
-                      : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/8 dark:hover:text-white'
+                      ? 'bg-[var(--te-accent)]/10 text-[var(--te-accent)]'
+                      : 'text-[var(--te-text-muted)] hover:bg-[var(--te-bg-hover)] hover:text-[var(--te-text)]'
                     }`}
                 >
                   {opt.value === value && (
-                    <span className="h-1.5 w-1.5 rounded-full bg-cyan-500 dark:bg-cyan-400 shrink-0" />
+                    <span className="h-1.5 w-1.5 rounded-full bg-[var(--te-accent)] shrink-0" />
                   )}
                   <span className={opt.value === value ? '' : 'pl-[14px]'}>
                     {opt.label}
@@ -245,8 +245,8 @@ export function EditorCodeBlockBar({ editor }: EditorCodeBlockBarProps) {
   };
 
   return (
-    <div className="flex items-center gap-1 border-b border-slate-200 dark:border-white/10 bg-slate-50/50 dark:bg-slate-900/60 px-2 py-1.5">
-      <div className="flex items-center gap-0.5 rounded-lg border border-slate-200 dark:border-none bg-white dark:bg-white/5 px-1 shadow-sm dark:shadow-none">
+    <div className="flex items-center gap-1 border-b border-[var(--te-border-muted)] bg-[var(--te-bg-hover)] px-2 py-1.5">
+      <div className="flex items-center gap-0.5 rounded-lg border border-[var(--te-border-muted)] bg-[var(--te-bg-surface)] px-1 shadow-sm dark:shadow-none">
         <DropdownSelect
           icon={<Code2 size={14} />}
           label="Language"
@@ -257,9 +257,9 @@ export function EditorCodeBlockBar({ editor }: EditorCodeBlockBarProps) {
         />
       </div>
 
-      <div className="mx-1 h-4 w-px bg-slate-200 dark:bg-white/10" />
+      <div className="mx-1 h-4 w-px bg-[var(--te-border-muted)]" />
 
-      <div className="flex items-center gap-0.5 rounded-lg border border-slate-200 dark:border-none bg-white dark:bg-white/5 px-1 shadow-sm dark:shadow-none">
+      <div className="flex items-center gap-0.5 rounded-lg border border-[var(--te-border-muted)] bg-[var(--te-bg-surface)] px-1 shadow-sm dark:shadow-none">
         <DropdownSelect
           icon={<Palette size={14} />}
           label="Theme"
@@ -269,7 +269,7 @@ export function EditorCodeBlockBar({ editor }: EditorCodeBlockBarProps) {
         />
       </div>
 
-      <div className="ml-auto text-[10px] font-medium text-slate-600 tracking-wider uppercase select-none">
+      <div className="ml-auto text-[10px] font-medium text-[var(--te-text-muted)] tracking-wider uppercase select-none">
         Code Block
       </div>
     </div>

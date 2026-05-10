@@ -59,7 +59,7 @@ export function Editor({
       editorProps: {
         attributes: {
           class:
-            'tiptap-editor-shell prose max-w-none min-h-[280px] px-4 py-3 text-[15px] leading-relaxed focus:outline-none dark:prose-invert text-slate-900 dark:text-slate-100 prose-headings:text-slate-900 dark:prose-headings:text-slate-50 prose-a:text-cyan-600 dark:prose-a:text-cyan-400 prose-strong:text-slate-900 dark:prose-strong:text-slate-50',
+            'tiptap-editor-shell prose max-w-none min-h-[280px] px-4 py-3 text-[15px] leading-relaxed focus:outline-none text-inherit prose-headings:text-inherit prose-a:text-inherit prose-strong:text-inherit prose-p:text-inherit',
         },
         handleDrop: (_view, event, _slice, moved) => {
           if (!moved && event.dataTransfer && event.dataTransfer.files && event.dataTransfer.files[0]) {
@@ -108,7 +108,7 @@ export function Editor({
   return (
     <EditorConfigContext.Provider value={config}>
       <div
-        className={`overflow-hidden rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/40 shadow-sm dark:shadow-inner ${
+        className={`overflow-hidden rounded-2xl border border-[var(--te-border)] bg-transparent shadow-sm dark:shadow-inner ${
           config.theme === 'dark' ? 'dark' : ''
         } ${className}`}
       >

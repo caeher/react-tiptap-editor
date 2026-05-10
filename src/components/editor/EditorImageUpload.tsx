@@ -47,11 +47,11 @@ export function EditorImageUpload({ editor }: EditorImageUploadProps) {
         onMouseDown={(e) => e.preventDefault()}
         className={`rounded-lg p-2 transition ${
           disabled
-            ? 'cursor-not-allowed text-slate-400 dark:text-slate-600'
-            : 'text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white'
+            ? 'cursor-not-allowed text-[var(--te-text-muted)] opacity-50'
+            : 'text-[var(--te-text-muted)] hover:bg-[var(--te-bg-hover)] hover:text-[var(--te-text)]'
         }`}
       >
-        {uploading ? <Loader2 size={18} className="animate-spin text-cyan-500 dark:text-cyan-400" /> : <ImageIcon size={18} />}
+        {uploading ? <Loader2 size={18} className="animate-spin text-[var(--te-accent)]" /> : <ImageIcon size={18} />}
       </button>
     </>
   );

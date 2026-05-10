@@ -50,10 +50,10 @@ function Btn({
       onClick={onClick}
       className={`rounded-lg p-2 transition ${
         disabled
-          ? 'cursor-not-allowed text-slate-400 dark:text-slate-600'
+          ? 'cursor-not-allowed text-[var(--te-text-muted)] opacity-50'
           : active
-            ? 'bg-cyan-500/20 text-cyan-600 dark:bg-cyan-500/25 dark:text-cyan-200'
-            : 'text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-white/10'
+            ? 'bg-[var(--te-accent)]/20 text-[var(--te-accent)]'
+            : 'text-[var(--te-text-muted)] hover:bg-[var(--te-bg-hover)] hover:text-[var(--te-text)]'
       }`}
     >
       {children}
@@ -81,7 +81,7 @@ export function EditorBubbleMenu({ editor }: EditorBubbleMenuProps) {
     <BubbleMenu
       editor={editor}
       shouldShow={() => showBubble()}
-      className="flex max-w-[min(100vw-2rem,520px)] flex-wrap items-center gap-1 rounded-xl border border-slate-200 dark:border-white/10 bg-white/98 dark:bg-slate-900/98 p-1 shadow-2xl"
+      className="flex max-w-[min(100vw-2rem,520px)] flex-wrap items-center gap-1 rounded-xl border border-[var(--te-border-muted)] bg-[var(--te-bg-surface)] p-1 shadow-2xl"
     >
       {editor.isActive('image') ? (
         <>
@@ -147,7 +147,7 @@ export function EditorBubbleMenu({ editor }: EditorBubbleMenuProps) {
 
           {features.textFormatting && (
             <>
-          <div className="mx-0.5 h-6 w-px bg-slate-200 dark:bg-white/15" />
+          <div className="mx-0.5 h-6 w-px bg-[var(--te-border-muted)]" />
               <Btn title="Bold" active={editor.isActive('bold')} onClick={() => chain().toggleBold().run()}>
                 <Bold size={18} />
               </Btn>
@@ -170,7 +170,7 @@ export function EditorBubbleMenu({ editor }: EditorBubbleMenuProps) {
             </>
           )}
 
-          <div className="mx-0.5 h-6 w-px bg-white/15" />
+          <div className="mx-0.5 h-6 w-px bg-[var(--te-border-muted)]" />
           {features.link && <EditorLinkPopover editor={editor} />}
           
           {features.image && imageConfig.mode === 'url' && <EditorImagePopover editor={editor} />}

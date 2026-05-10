@@ -74,10 +74,10 @@ export function EditorLinkPopover({ editor }: EditorLinkPopoverProps) {
           aria-label="Link"
           className={`flex rounded-lg p-2 transition ${
             disabled
-              ? 'cursor-not-allowed text-slate-400 dark:text-slate-600'
+              ? 'cursor-not-allowed text-[var(--te-text-muted)] opacity-50'
               : editor.isActive('link')
-                ? 'bg-cyan-500/20 text-cyan-600 dark:bg-cyan-500/25 dark:text-cyan-200'
-                : 'text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white'
+                ? 'bg-[var(--te-accent)]/20 text-[var(--te-accent)]'
+                : 'text-[var(--te-text-muted)] hover:bg-[var(--te-bg-hover)] hover:text-[var(--te-text)]'
           }`}
         >
           <LinkIcon size={18} />
@@ -85,7 +85,7 @@ export function EditorLinkPopover({ editor }: EditorLinkPopoverProps) {
       }
       content={(close) => (
         <div className="flex min-w-[240px] flex-col gap-2 p-3">
-          <label className="text-xs font-medium text-slate-500 dark:text-slate-400" htmlFor="editor-link-url">
+          <label className="text-xs font-medium text-[var(--te-text-muted)]" htmlFor="editor-link-url">
             URL
           </label>
           <input
@@ -99,12 +99,12 @@ export function EditorLinkPopover({ editor }: EditorLinkPopoverProps) {
               }
             }}
             placeholder="https://"
-            className="rounded-lg border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-slate-950/80 px-3 py-2 text-sm text-slate-700 dark:text-slate-100 placeholder:text-slate-500 focus:border-cyan-500/50 focus:outline-none focus:ring-2 focus:ring-cyan-500/30"
+            className="rounded-lg border border-[var(--te-border-muted)] bg-[var(--te-bg-hover)] px-3 py-2 text-sm text-[var(--te-text)] placeholder:text-[var(--te-text-muted)] focus:border-[var(--te-accent)]/50 focus:outline-none focus:ring-2 focus:ring-[var(--te-accent)]/30"
           />
           <div className="flex flex-wrap gap-2 pt-1">
             <button
               type="button"
-              className="rounded-lg bg-cyan-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-cyan-500"
+              className="rounded-lg bg-[var(--te-accent)] px-3 py-1.5 text-sm font-medium text-white hover:opacity-90"
               onMouseDown={(e) => e.preventDefault()}
               onClick={() => applyLink(close)}
             >
@@ -112,7 +112,7 @@ export function EditorLinkPopover({ editor }: EditorLinkPopoverProps) {
             </button>
             <button
               type="button"
-              className="rounded-lg border border-slate-200 dark:border-white/10 px-3 py-1.5 text-sm text-slate-600 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-white/10"
+              className="rounded-lg border border-[var(--te-border-muted)] px-3 py-1.5 text-sm text-[var(--te-text-muted)] hover:bg-[var(--te-bg-hover)] hover:text-[var(--te-text)]"
               onMouseDown={(e) => e.preventDefault()}
               onClick={() => openLink()}
               disabled={!editor.isActive('link')}

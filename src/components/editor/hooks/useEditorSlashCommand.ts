@@ -1,15 +1,6 @@
 import type { Editor, Range } from '@tiptap/core';
-import type { EditorConfig, EditorFeatures } from '../EditorConfig';
+import type { EditorConfig, SlashItem } from '../EditorConfig';
 import { uploadImage } from '../EditorConfig';
-
-export type SlashItem = {
-  id: string;
-  title: string;
-  keywords?: string[];
-  featureKey?: keyof EditorFeatures;
-  /** Runs after deleting the `/query` trigger range */
-  command: (opts: { editor: Editor; range: Range }) => void;
-};
 
 function deleteSlashTrigger(editor: Editor, range: Range) {
   editor.chain().focus().deleteRange(range).run();

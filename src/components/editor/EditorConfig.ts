@@ -1,4 +1,5 @@
 import { createContext, useContext } from 'react';
+import type { Editor, Range } from '@tiptap/core';
 
 /** Image handling modes */
 export type ImageMode = 'url' | 'upload' | 'disabled';
@@ -56,13 +57,22 @@ export interface EditorFeatures {
   slashCommand: boolean;
 }
 
+export type SlashItem = {
+  id: string;
+  title: string;
+  keywords?: string[];
+  featureKey?: keyof EditorFeatures;
+  /** Runs after deleting the `/query` trigger range */
+  command: (opts: { editor: Editor; range: Range }) => void;
+};
+
 export interface EditorConfig {
   features: EditorFeatures;
   image: EditorImageConfig;
   /** Theme mode. Default: 'dark' */
   theme?: EditorTheme;
   /** Custom slash command items to append to the default list */
-  customSlashItems?: any[]; // Using any[] for now to avoid circular dependency, will refine if needed
+  customSlashItems?: SlashItem[];
 }
 
 export const DEFAULT_EDITOR_CONFIG: EditorConfig = {
@@ -108,7 +118,7 @@ export function resolveImageSrc(result: ImageUploadResult, config: EditorImageCo
 export async function uploadImage(
   file: File,
   config: EditorImageConfig,
-  editor: any
+  editor: Editor
 ): Promise<void> {
   const maxSize = config.maxFileSize ?? 5 * 1024 * 1024;
   if (file.size > maxSize) {

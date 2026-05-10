@@ -1,3 +1,15 @@
+# [1.1.0](https://github.com/caeher/react-tiptap-editor/compare/v1.0.0...v1.1.0) (2026-05-10)
+
+
+### Bug Fixes
+
+* EditorCodeBlockBar linter ([d37898f](https://github.com/caeher/react-tiptap-editor/commit/d37898fe111ec9967cc50d31f3ac0227ef1cba8e))
+
+
+### Features
+
+* add options to codeblocks ([f200f3a](https://github.com/caeher/react-tiptap-editor/commit/f200f3a65700570c738ff4040a36fe43f6867bc1))
+
 # 1.0.0 (2026-05-03)
 
 

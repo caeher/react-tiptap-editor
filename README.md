@@ -1,118 +1,127 @@
 # @caeher/react-tiptap-editor
 
-A premium, Notion-style rich text editor for React, built on top of TipTap, Shiki, and Tailwind CSS.
+A feature-rich, Tailwind CSS-styled React rich text editor built on top of Tiptap.
 
 ## Features
-
-- 🚀 **Modern UI**: Clean, glassmorphic design with smooth animations.
-- ⌨️ **Slash Commands**: Quick insertion of blocks via `/`.
-- 🫧 **Bubble Menu**: Contextual formatting menu on text selection.
-- 🎨 **Code Highlighting**: Beautiful syntax highlighting powered by Shiki.
-- 📝 **Markdown Support**: Seamless markdown input and output.
-- ⚙️ **Highly Configurable**: Enable/disable features and customize image handling.
+- Fully customizable and configurable
+- Built-in Tailwind CSS styling (supports v4.x)
+- Markdown output out of the box
+- Built-in toolbar, bubble menu, slash commands, and code block formatting
 
 ## Installation
 
+Install the package via your preferred package manager:
+
 ```bash
 npm install @caeher/react-tiptap-editor
+# or
+yarn add @caeher/react-tiptap-editor
+# or
+pnpm add @caeher/react-tiptap-editor
 ```
 
-## Usage
+Also, make sure you have the required peer dependencies installed:
 
-### Basic Example
+```bash
+npm install @tiptap/core @tiptap/react @tiptap/starter-kit @tiptap/pm
+```
+
+## Configuring Tailwind CSS 4.x
+
+To ensure the editor styles are properly applied in your project, you need to include the library's CSS. In Tailwind CSS v4, you can import the stylesheet directly into your global CSS file.
+
+Add the following to your global `index.css` (or `app.css`):
+
+```css
+@import "tailwindcss";
+@import "@caeher/react-tiptap-editor/dist/index.css";
+
+/* Your custom styles */
+```
+
+Or, if your project uses a `tailwind.config.js` or `tailwind.config.ts` (if you maintain a v4 config file structure or use the Vite plugin), make sure to include the paths to the library components so Tailwind can scan them:
+
+```ts
+export default {
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+    // Add the library to your content paths
+    "./node_modules/@caeher/react-tiptap-editor/dist/**/*.{js,ts,jsx,tsx}"
+  ],
+  // ...
+}
+```
+
+## Basic Usage
+
+Here is a quick example of how to use the `Editor` component in your React application:
 
 ```tsx
 import { useState } from 'react';
 import { Editor } from '@caeher/react-tiptap-editor';
+import '@caeher/react-tiptap-editor/dist/index.css'; // You can also import the CSS directly in your entry file
 
 function App() {
-  const [content, setContent] = useState('# Hello World');
+  // Note: the editor outputs markdown by default
+  const [content, setContent] = useState('# Hello World!\nStart typing...');
 
   return (
-    <Editor 
-      content={content} 
-      onChange={setContent} 
-      placeholder="Start typing..." 
-    />
+    <div className="max-w-4xl mx-auto mt-10">
+      <Editor
+        content={content}
+        onChange={(markdown) => setContent(markdown)}
+        placeholder="Write something amazing..."
+      />
+    </div>
   );
 }
+
+export default App;
 ```
 
-### Configuration
+## Props Reference
 
-You can customize the editor by passing a `config` prop.
+### `<Editor />`
 
-```tsx
-<Editor
-  config={{
-    features: {
-      table: false,       // Disable tables
-      codeBlock: true,    // Enable code blocks
-      slashCommand: true, // Enable slash menu
-    },
-    image: {
-      mode: 'url',        // 'url', 'upload', or 'disabled'
-    }
-  }}
-/>
-```
+| Prop | Type | Default | Description |
+|---|---|---|---|
+| `content` | `string` | `''` | Initial markdown content of the editor. |
+| `onChange` | `(markdown: string) => void` | `undefined` | Callback fired when the content changes, returning markdown. |
+| `placeholder` | `string` | `undefined` | Placeholder text when the editor is empty. |
+| `editable` | `boolean` | `true` | Whether the editor is read-only or not. |
+| `className` | `string` | `''` | Additional CSS classes for the editor container. |
+| `config` | `Partial<EditorConfig>` | `{}` | Advanced configuration for features and images. |
 
-### Image Upload Support
+## Contributing
 
-To enable local image uploads, set the mode to `'upload'` and provide an `onUpload` handler.
+We welcome contributions to `@caeher/react-tiptap-editor`! Follow these steps to set up the project locally:
 
-```tsx
-<Editor
-  config={{
-    image: {
-      mode: 'upload',
-      accept: 'image/png, image/jpeg',
-      maxFileSize: 10 * 1024 * 1024, // 10MB
-      onUpload: async (file) => {
-        const formData = new FormData();
-        formData.append('file', file);
+1. **Fork the repository**
+   Go to the [repository page](https://github.com/caeher/react-tiptap-editor) and click the "Fork" button.
 
-        const response = await fetch('/api/upload', {
-          method: 'POST',
-          body: formData,
-        });
+2. **Clone your fork**
+   ```bash
+   git clone https://github.com/YOUR_USERNAME/react-tiptap-editor.git
+   cd react-tiptap-editor
+   ```
 
-        const data = await response.json();
-        return { src: data.url };
-      },
-      retrieveBasePath: 'https://cdn.example.com', // Optional base path for relative URLs
-    }
-  }}
-/>
-```
+3. **Install dependencies**
+   ```bash
+   npm install
+   ```
 
-## Configuration Options
+4. **Run the development server**
+   ```bash
+   npm run dev
+   ```
+   This will start a Vite development server where you can test your changes in `src/App.tsx`.
 
-### `EditorFeatures`
+5. **Make your changes**
+   - The editor components are located in `src/components/editor`.
+   - Make sure your code follows the existing style.
+   - Run `npm run lint` to check for formatting or linting errors.
 
-| Property | Type | Default | Description |
-| :--- | :--- | :--- | :--- |
-| `textFormatting` | `boolean` | `true` | Bold, italic, underline, strike, inline code |
-| `headings` | `boolean` | `true` | H1, H2, H3, H4 |
-| `lists` | `boolean` | `true` | Bullet, ordered, and task lists |
-| `blockquote` | `boolean` | `true` | Blockquote insertion |
-| `codeBlock` | `boolean` | `true` | Shiki-powered code blocks |
-| `table` | `boolean` | `true` | Table insertion and management |
-| `image` | `boolean` | `true` | Image support |
-| `link` | `boolean` | `true` | Link insertion |
-| `horizontalRule` | `boolean` | `true` | Divider line |
-| `slashCommand` | `boolean` | `true` | Slash (`/`) command menu |
-
-### `EditorImageConfig`
-
-| Property | Type | Default | Description |
-| :--- | :--- | :--- | :--- |
-| `mode` | `'url' \| 'upload' \| 'disabled'` | `'url'` | Image insertion method |
-| `onUpload` | `(file: File) => Promise<{ src: string }>` | `undefined` | Required for `'upload'` mode |
-| `retrieveBasePath` | `string` | `undefined` | Prepended to relative URLs |
-| `accept` | `string` | `'image/*'` | Allowed file types |
-| `maxFileSize` | `number` | `5242880` | Max file size in bytes (default 5MB) |
-
-## License
-
-MIT
+6. **Submit a Pull Request**
+   - Commit your changes with descriptive messages.
+   - Push to your fork and submit a PR to the `main` branch of the original repository.

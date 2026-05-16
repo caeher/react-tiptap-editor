@@ -19,11 +19,11 @@
     "dist"
   ],
   "scripts": {
-    "dev": "vite --root playground",
-    "playground": "vite --root playground",
+    "dev": "vite playground",
+    "playground": "vite playground",
     "build": "tsup && node -e \"require('fs').copyFileSync('src/components/editor/editor.css', 'dist/index.css')\"",
-    "build:playground": "vite build --root playground",
-    "preview": "vite preview --root playground",
+    "build:playground": "vite build playground",
+    "preview": "vite preview playground",
     "lint": "eslint .",
     "prepublishOnly": "pnpm build"
   },

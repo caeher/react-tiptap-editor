@@ -92,7 +92,7 @@ export function Editor({
   );
 
   useEffect(() => {
-    if (!editor || content === undefined) return;
+    if (!editor || editor.isDestroyed || content === undefined) return;
     const current = getMarkdown(editor);
     if (current === content) return;
     syncingFromParent.current = true;
@@ -101,15 +101,15 @@ export function Editor({
   }, [content, editor]);
 
   useEffect(() => {
-    if (!editor) return;
+    if (!editor || editor.isDestroyed) return;
     editor.setEditable(editable);
   }, [editable, editor]);
 
   return (
     <EditorConfigContext.Provider value={config}>
       <div
-        className={`overflow-hidden rounded-2xl border border-[var(--te-border)] bg-transparent shadow-sm dark:shadow-inner ${
-          config.theme === 'dark' ? 'dark' : ''
+        className={`overflow-hidden rounded-2xl border border-[var(--te-border)] bg-[var(--te-bg-surface)] text-[var(--te-text)] shadow-sm dark:shadow-inner ${
+          config.theme === 'dark' ? 'dark' : config.theme === 'light' ? 'light' : ''
         } ${className}`}
       >
         <EditorToolbar editor={editor} extra={toolbarExtra} />

@@ -84,7 +84,7 @@ export function EditorToolbar({ editor, extra }: EditorToolbarProps) {
     return () => document.removeEventListener('mousedown', close);
   }, []);
 
-  if (!editor) {
+  if (!editor || editor.isDestroyed) {
     return (
       <div className="flex flex-wrap gap-1 border-b border-[var(--te-border-muted)] px-2 py-2">
         <span className="text-xs text-[var(--te-text-muted)]">Loading editor…</span>

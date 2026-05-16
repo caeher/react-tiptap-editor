@@ -123,7 +123,7 @@ export function EditorLinkPopover({ editor }: EditorLinkPopoverProps) {
             </button>
             <button
               type="button"
-              className="rounded-lg border border-red-500/30 px-3 py-1.5 text-sm text-red-500 dark:text-red-300 hover:bg-red-500/10"
+              className="rounded-lg border border-red-500/30 px-3 py-1.5 text-sm text-red-500 hover:bg-red-500/10"
               onMouseDown={(e) => e.preventDefault()}
               onClick={() => removeLink(close)}
               disabled={!editor.isActive('link')}

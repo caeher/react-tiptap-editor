@@ -57,6 +57,7 @@ function App() {
                 onChange={setContent}
                 placeholder="Start writing something amazing..."
                 className="min-h-[500px]"
+                config={{ theme: isDark ? 'dark' : 'light' }}
               />
             </div>
           </div>

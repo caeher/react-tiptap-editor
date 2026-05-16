@@ -65,7 +65,7 @@ export function EditorBubbleMenu({ editor }: EditorBubbleMenuProps) {
   const config = useEditorConfig();
   const { features, image: imageConfig } = config;
 
-  if (!editor) return null;
+  if (!editor || editor.isDestroyed) return null;
 
   const chain = () => editor.chain().focus();
 

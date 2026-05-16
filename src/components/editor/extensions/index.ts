@@ -41,11 +41,11 @@ export function createEditorExtensions(options: CreateEditorExtensionsOptions = 
     italic: features?.textFormatting !== false ? {} : false,
     strike: features?.textFormatting !== false ? {} : false,
     code: features?.textFormatting !== false ? {} : false,
-    underline: features?.textFormatting !== false ? {} : false,
     blockquote: features?.blockquote !== false ? {} : false,
     bulletList: features?.lists !== false ? {} : false,
     orderedList: features?.lists !== false ? {} : false,
     horizontalRule: features?.horizontalRule !== false ? {} : false,
+    dropCursor: false,
   }) as Extension);
 
   if (features?.codeBlock !== false) {

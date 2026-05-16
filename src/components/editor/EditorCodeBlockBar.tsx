@@ -223,7 +223,7 @@ export function EditorCodeBlockBar({ editor }: EditorCodeBlockBarProps) {
     };
   }, [editor, forceUpdate]);
 
-  if (!editor) return null;
+  if (!editor || editor.isDestroyed) return null;
 
   const isCodeBlock = editor.isActive('codeBlock');
   if (!isCodeBlock) return null;

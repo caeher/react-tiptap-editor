@@ -91,7 +91,7 @@ export const DEFAULT_EDITOR_CONFIG: EditorConfig = {
   image: {
     mode: 'url',
   },
-  theme: 'dark',
+  theme: 'system',
 };
 
 export const EditorConfigContext = createContext<EditorConfig>(DEFAULT_EDITOR_CONFIG);

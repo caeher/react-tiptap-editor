@@ -26,6 +26,39 @@
   --te-ring-offset: #0f172a;
 }
 
+.light, [data-theme='light'] {
+  --te-bg: transparent;
+  --te-bg-surface: #ffffff;
+  --te-bg-hover: rgba(0, 0, 0, 0.05);
+  --te-bg-selected: rgba(34, 211, 238, 0.1);
+  --te-border: #e2e8f0;
+  --te-border-muted: rgba(226, 232, 240, 0.5);
+  --te-text: #1e293b;
+  --te-text-muted: #64748b;
+  --te-accent: #06b6d4;
+  --te-ring: rgba(34, 211, 238, 0.6);
+  --te-bg-header: rgba(248, 250, 252, 0.8);
+  --te-ring-offset: #ffffff;
+}
+
+/* Map Tailwind Typography (prose) variables to our CSS variables */
+.tiptap-editor-shell.prose {
+  --tw-prose-body: var(--te-text);
+  --tw-prose-headings: var(--te-text);
+  --tw-prose-links: var(--te-accent);
+  --tw-prose-bold: var(--te-text);
+  --tw-prose-counters: var(--te-text-muted);
+  --tw-prose-bullets: var(--te-border);
+  --tw-prose-hr: var(--te-border);
+  --tw-prose-quotes: var(--te-text);
+  --tw-prose-quote-borders: var(--te-border);
+  --tw-prose-code: var(--te-text);
+  --tw-prose-pre-code: var(--te-text);
+  --tw-prose-pre-bg: var(--te-bg-hover);
+  --tw-prose-th-borders: var(--te-border);
+  --tw-prose-td-borders: var(--te-border);
+}
+
 .tiptap-editor-shell table {
   border-collapse: separate;
   border-spacing: 0;

@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import { Editor } from '@caeher/react-tiptap-editor'
-import '@caeher/react-tiptap-editor/dist/index.css'
 import { Sun, Moon } from 'lucide-react'
 
 function App() {
@@ -27,7 +26,7 @@ function App() {
               Tiptap Editor
             </h1>
           </div>
-          
+
           <div className="flex items-center gap-3">
             <button
               onClick={() => setIsDark(!isDark)}
@@ -53,8 +52,8 @@ function App() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2">
             <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-200 dark:border-slate-800 p-1">
-              <Editor 
-                content={content} 
+              <Editor
+                content={content}
                 onChange={setContent}
                 placeholder="Start writing something amazing..."
                 className="min-h-[500px]"
@@ -84,7 +83,7 @@ function App() {
           </div>
         </div>
       </main>
-      
+
       <footer className="py-12 border-t border-slate-200 dark:border-slate-800 mt-12">
         <div className="max-w-5xl mx-auto px-4 text-center">
           <p className="text-slate-500 dark:text-slate-400 text-sm">

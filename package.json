@@ -5,6 +5,7 @@
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "sideEffects": false,
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -12,7 +13,7 @@
       "require": "./dist/index.cjs",
       "default": "./dist/index.js"
     },
-    "./dist/index.css": "./dist/index.css"
+    "./style": "./dist/index.css"
   },
   "files": [
     "dist"
@@ -20,11 +21,11 @@
   "scripts": {
     "dev": "vite",
     "playground": "vite",
-    "build": "tsup src/index.ts --format esm,cjs --dts --minify --clean && npx tailwindcss -i src/index.css -o dist/index.css --minify",
+    "build": "tsup && npx tailwindcss -i src/index.css -o dist/index.css --minify",
     "build:playground": "vite build",
     "preview": "vite preview",
     "lint": "eslint .",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "pnpm build"
   },
   "repository": {
     "type": "git",
@@ -35,11 +36,32 @@
   },
   "peerDependencies": {
     "@tiptap/core": "^3.0.0",
+    "@tiptap/extension-dropcursor": "^3.0.0",
+    "@tiptap/extension-image": "^3.0.0",
+    "@tiptap/extension-link": "^3.0.0",
+    "@tiptap/extension-list": "^3.0.0",
+    "@tiptap/extension-placeholder": "^3.0.0",
+    "@tiptap/extension-table": "^3.0.0",
+    "@tiptap/extension-typography": "^3.0.0",
+    "@tiptap/extension-underline": "^3.0.0",
     "@tiptap/pm": "^3.0.0",
     "@tiptap/react": "^3.0.0",
     "@tiptap/starter-kit": "^3.0.0",
+    "@tiptap/suggestion": "^3.0.0",
+    "lucide-react": ">=0.300.0",
     "react": "^18.0.0 || ^19.0.0",
-    "react-dom": "^18.0.0 || ^19.0.0"
+    "react-dom": "^18.0.0 || ^19.0.0",
+    "shiki": "^1.0.0 || ^2.0.0 || ^3.0.0 || ^4.0.0",
+    "tiptap-extension-code-block-shiki": "^1.0.0",
+    "tiptap-markdown": "^0.8.0 || ^0.9.0"
+  },
+  "peerDependenciesMeta": {
+    "shiki": {
+      "optional": true
+    },
+    "tiptap-extension-code-block-shiki": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
@@ -47,6 +69,7 @@
     "@tailwindcss/typography": "^0.5.19",
     "@tailwindcss/vite": "^4.2.4",
     "@tiptap/core": "^3.22.5",
+    "@tiptap/extension-dropcursor": "^3.23.1",
     "@tiptap/extension-image": "^3.22.5",
     "@tiptap/extension-link": "^3.22.5",
     "@tiptap/extension-list": "^3.22.5",
@@ -77,8 +100,5 @@
     "typescript": "~6.0.2",
     "typescript-eslint": "^8.58.2",
     "vite": "^8.0.11"
-  },
-  "dependencies": {
-    "@tiptap/extension-dropcursor": "^3.23.1"
   }
 }

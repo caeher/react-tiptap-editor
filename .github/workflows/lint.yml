@@ -22,3 +22,10 @@ jobs:
         run: npm run lint
       - name: Type check
         run: npx tsc --noEmit
+      - name: Build Library
+        run: npm run build
+      - name: Validate Playground
+        run: |
+          cd playground
+          npm install
+          npm run build

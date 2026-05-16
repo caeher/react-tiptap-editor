@@ -45,7 +45,7 @@ export function createEditorExtensions(options: CreateEditorExtensionsOptions = 
     bulletList: features?.lists !== false ? {} : false,
     orderedList: features?.lists !== false ? {} : false,
     horizontalRule: features?.horizontalRule !== false ? {} : false,
-    dropCursor: false,
+    dropcursor: false,
   }) as Extension);
 
   if (features?.codeBlock !== false) {

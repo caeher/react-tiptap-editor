@@ -19,7 +19,9 @@
   ],
   "scripts": {
     "dev": "vite",
+    "playground": "vite",
     "build": "tsup src/index.ts --format esm,cjs --dts --minify --clean && npx tailwindcss -i src/index.css -o dist/index.css --minify",
+    "build:playground": "vite build",
     "preview": "vite preview",
     "lint": "eslint .",
     "prepublishOnly": "npm run build"

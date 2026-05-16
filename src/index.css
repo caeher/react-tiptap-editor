@@ -1,40 +1,21 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
-/* Custom Scrollbar Styles for the Editor */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+@theme {
+  --color-editor-bg: var(--te-bg-surface, white);
+  --color-editor-text: var(--te-text, #0f172a);
+  --color-editor-border: var(--te-border, #e2e8f0);
 }
 
-::-webkit-scrollbar-track {
-  background: transparent;
+/* Custom styles for the editor */
+.ProseMirror {
+  outline: none;
 }
 
-::-webkit-scrollbar-thumb {
-  background: rgba(148, 163, 184, 0.2);
-  border-radius: 10px;
-  transition: background 0.2s;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(148, 163, 184, 0.4);
-}
-
-.custom-scrollbar {
-  scrollbar-width: thin;
-  scrollbar-color: rgba(148, 163, 184, 0.2) transparent;
-}
-
-.custom-scrollbar::-webkit-scrollbar {
-  width: 5px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(34, 211, 238, 0.3);
-  border-radius: 20px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: rgba(34, 211, 238, 0.5);
+.ProseMirror p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  color: #adb5bd;
+  pointer-events: none;
+  height: 0;
 }

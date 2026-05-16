@@ -164,7 +164,7 @@ export const Popover = ({
             }}
             className={`${!matchTriggerWidth ? 'md:w-max' : ''} ${theme === 'dark' ? 'dark' : ''}`}
           >
-            <div className="rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/95 backdrop-blur-md shadow-2xl overflow-hidden text-slate-900 dark:text-slate-100">
+            <div className="rounded-xl border border-[var(--te-border-muted)] bg-[var(--te-bg-surface)] backdrop-blur-md shadow-2xl overflow-hidden text-[var(--te-text)]">
               {content(() => setIsOpen(false))}
             </div>
           </div>

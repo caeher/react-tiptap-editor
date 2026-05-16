@@ -7,7 +7,7 @@
   --te-bg-selected: rgba(34, 211, 238, 0.1);
   --te-border: #e2e8f0;
   --te-border-muted: rgba(226, 232, 240, 0.5);
-  --te-text: inherit;
+  --te-text: #1e293b;
   --te-text-muted: #64748b;
   --te-accent: #06b6d4;
   --te-ring: rgba(34, 211, 238, 0.6);
@@ -20,6 +20,7 @@
   --te-bg-hover: rgba(255, 255, 255, 0.1);
   --te-border: #334155;
   --te-border-muted: rgba(51, 65, 85, 0.5);
+  --te-text: #f1f5f9;
   --te-text-muted: #94a3b8;
   --te-bg-header: rgba(15, 23, 42, 0.5);
   --te-ring-offset: #0f172a;
